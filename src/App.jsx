@@ -7,7 +7,7 @@ import Settings from './pages/Settings';
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/website-builder">
       <Routes>
         <Route path="/" element={<DashboardLayout />}>
           <Route index element={<Dashboard />} />
