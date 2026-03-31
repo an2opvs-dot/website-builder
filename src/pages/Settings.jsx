@@ -21,6 +21,7 @@ export default function Settings() {
         <div className="settings-tabs">
           <button className={`tab-btn ${activeTab === 'branding' ? 'active' : ''}`} onClick={() => setActiveTab('branding')}>Branding</button>
           <button className={`tab-btn ${activeTab === 'seo' ? 'active' : ''}`} onClick={() => setActiveTab('seo')}>SEO Defaults</button>
+          <button className={`tab-btn ${activeTab === 'ai' ? 'active' : ''}`} onClick={() => setActiveTab('ai')}>AI Configuration</button>
           <button className={`tab-btn ${activeTab === 'integrations' ? 'active' : ''}`} onClick={() => setActiveTab('integrations')}>Integrations</button>
         </div>
 
@@ -53,6 +54,28 @@ export default function Settings() {
               <div className="form-group">
                 <label>Default Description</label>
                 <textarea rows="4" defaultValue="A modern website built with BuildFlow platform."></textarea>
+              </div>
+            </div>
+          )}
+
+          {activeTab === 'ai' && (
+            <div className="form-section">
+              <h3>Google Gemini AI</h3>
+              <p style={{fontSize: '0.9rem', color: 'var(--text-secondary)', marginBottom: '20px'}}>
+                Connect your Google Gemini API key to enable "Describe your business" website generation features.
+              </p>
+              <div className="form-group">
+                <label>Gemini API Key</label>
+                <input 
+                  type="password" 
+                  placeholder="AIza..." 
+                  value={localStorage.getItem('gemini_api_key') || ''} 
+                  onChange={(e) => localStorage.setItem('gemini_api_key', e.target.value)}
+                  style={{padding: '12px', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-md)', width: '100%'}}
+                />
+                <p style={{fontSize: '0.8rem', color: 'var(--text-secondary)', marginTop: '8px'}}>
+                  Your key is stored locally in your browser and never sent to our servers.
+                </p>
               </div>
             </div>
           )}

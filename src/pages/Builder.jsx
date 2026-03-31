@@ -19,6 +19,7 @@ import { useDroppable } from '@dnd-kit/core';
 import { ArrowLeft, Monitor, Smartphone, Play, Globe, Plus, GripVertical, MoreVertical, LayoutTemplate, FileText } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import PublishModal from '../components/modals/PublishModal';
+import AIAssistantModal from '../components/modals/AIAssistantModal';
 import SidebarDraggableItem from '../components/builder/SidebarDraggableItem';
 import CanvasSortableItem from '../components/builder/CanvasSortableItem';
 import './Builder.css';
@@ -64,6 +65,7 @@ export default function Builder() {
   const navigate = useNavigate();
   const [device, setDevice] = useState('desktop');
   const [isPublishModalOpen, setIsPublishModalOpen] = useState(false);
+  const [isAIModalOpen, setIsAIModalOpen] = useState(false);
   const [leftTab, setLeftTab] = useState('components');
 
   const pages = [
@@ -163,6 +165,20 @@ export default function Builder() {
     }));
   };
 
+  const handleAIGenerate = (generatedNodes) => {
+    // Basic validation
+    if (!Array.isArray(generatedNodes)) return;
+    
+    // Assign IDs if missing
+    const nodesWithIds = generatedNodes.map((node, index) => ({
+        ...node,
+        id: node.id || `ai-node-${Date.now()}-${index}`
+    }));
+
+    updateCurrentPageNodes(nodesWithIds);
+    setIsAIModalOpen(false);
+  };
+
   const sidebarComponents = [
     { id: 'comp-1', type: 'hero', label: 'Hero Section' },
     { id: 'comp-2', type: 'features', label: 'Features Grid' },
@@ -210,6 +226,9 @@ export default function Builder() {
           </div>
           
           <div className="builder-header-right">
+            <button className="btn-ai-sparkle" onClick={() => setIsAIModalOpen(true)} style={{display: 'flex', alignItems: 'center', gap: '8px', background: 'linear-gradient(135deg, #6366f1 0%, #a855f7 100%)', color: 'white', border: 'none', padding: '8px 16px', borderRadius: 'var(--radius-md)', fontWeight: 600, cursor: 'pointer', marginRight: '12px', boxShadow: '0 4px 12px rgba(168, 85, 247, 0.25)'}}>
+              <Sparkles size={16} /> AI Build
+            </button>
             <button className="btn-secondary">
               <Play size={16} /> Preview
             </button>
@@ -395,6 +414,12 @@ export default function Builder() {
           onClose={() => setIsPublishModalOpen(false)}
           pagesData={pagesData}
           pages={pages}
+        />
+
+        <AIAssistantModal 
+          isOpen={isAIModalOpen}
+          onClose={() => setIsAIModalOpen(false)}
+          onGenerate={handleAIGenerate}
         />
       </div>
     </DndContext>
