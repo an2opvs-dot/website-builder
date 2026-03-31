@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import DashboardLayout from './components/layout/DashboardLayout';
 import Dashboard from './pages/Dashboard';
 import Builder from './pages/Builder';
@@ -7,7 +7,7 @@ import Settings from './pages/Settings';
 
 function App() {
   return (
-    <BrowserRouter basename="/website-builder">
+    <HashRouter>
       <Routes>
         <Route path="/" element={<DashboardLayout />}>
           <Route index element={<Dashboard />} />
@@ -16,7 +16,7 @@ function App() {
         </Route>
         <Route path="/builder/:siteId" element={<Builder />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
