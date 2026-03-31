@@ -1,0 +1,20 @@
+.dashboard-header-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn-create-site {
+  background-color: var(--blue-primary);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: var(--radius-md);
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.btn-create-site:hover {
+  background-color: var(--blue-hover);
+}
